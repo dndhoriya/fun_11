@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <h1>Hello, Telegram!</h1>
+  <p>This is a simple Telegram Mini App.</p>
+  <button onclick="greet()">Click Me</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    function greet() {
+      tg.MainButton.setText("You clicked!").show();
+    }
+  </script>
+</body>
+</html>
