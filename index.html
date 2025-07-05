@@ -8,60 +8,73 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
-      background-color: #f8f9fa;
-      padding-top: 20px;
+      background: #f8f9fa;
+      font-family: sans-serif;
     }
-    .card {
+    .product-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      background: white;
       margin-bottom: 20px;
     }
-    .tg-button {
-      background-color: #0088cc;
+    .product-img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .btn-add {
+      background: #0088cc;
       color: white;
       border: none;
-      border-radius: 6px;
-      padding: 10px;
       width: 100%;
+      padding: 10px;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h4 class="text-center mb-4">🛒 Welcome to Telegram Store</h4>
+  <div class="container mt-3">
+    <h4 class="text-center">🛍️ Telegram Trial Shop</h4>
 
-    <div class="row">
+    <div class="row mt-4" id="product-list">
       <!-- Product 1 -->
       <div class="col-12">
-        <div class="card">
-          <img src="https://via.placeholder.com/600x300" class="card-img-top" alt="Product 1" />
-          <div class="card-body">
-            <h5 class="card-title">Product Name 1</h5>
-            <p class="card-text">₹199 - A brief description of the product goes here.</p>
-            <button class="tg-button" onclick="addToCart('Product Name 1', 199)">Add to Cart</button>
-          </div>
+        <div class="product-card">
+          <img src="https://via.placeholder.com/600x300" class="product-img" />
+          <h5 class="mt-2">T-Shirt Red</h5>
+          <p class="mb-1">Rs. 299 <small class="text-danger">(50% OFF)</small></p>
+          <button class="btn-add" onclick="addToCart('T-Shirt Red', 299)">Add to Cart</button>
         </div>
       </div>
 
       <!-- Product 2 -->
       <div class="col-12">
-        <div class="card">
-          <img src="https://via.placeholder.com/600x300" class="card-img-top" alt="Product 2" />
-          <div class="card-body">
-            <h5 class="card-title">Product Name 2</h5>
-            <p class="card-text">₹299 - Another short description.</p>
-            <button class="tg-button" onclick="addToCart('Product Name 2', 299)">Add to Cart</button>
-          </div>
+        <div class="product-card">
+          <img src="https://via.placeholder.com/600x300/000/fff?text=Black+T-Shirt" class="product-img" />
+          <h5 class="mt-2">T-Shirt Black</h5>
+          <p class="mb-1">Rs. 399 <small class="text-danger">(33% OFF)</small></p>
+          <button class="btn-add" onclick="addToCart('T-Shirt Black', 399)">Add to Cart</button>
         </div>
       </div>
-
     </div>
+
+    <button class="btn btn-success w-100 mt-3" onclick="goToCheckout()">Checkout</button>
   </div>
 
   <script>
     const tg = window.Telegram.WebApp;
-    tg.ready();
+    tg.expand();
+    const cart = [];
 
     function addToCart(name, price) {
-      tg.MainButton.setText(`🛒 ${name} added (₹${price})`).show();
+      cart.push({ name, price });
+      tg.MainButton.setText(`🛒 ${cart.length} Item(s) in Cart`).show();
+    }
+
+    function goToCheckout() {
+      // Save cart to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.location.href = "checkout.html";
     }
   </script>
 </body>
