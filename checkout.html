@@ -53,14 +53,27 @@
 
     function submitOrder(e) {
       e.preventDefault();
-      const order = {
-        name: document.getElementById("name").value,
-        address: document.getElementById("address").value,
-        mobile: document.getElementById("mobile").value,
-        cart
-      };
-      alert("✅ Order Placed!\n" + JSON.stringify(order, null, 2));
-      // You can send this order to your Telegram bot or backend here
+      const name = document.getElementById("name").value;
+      const address = document.getElementById("address").value;
+      const mobile = document.getElementById("mobile").value;
+
+      const order = { name, address, mobile, cart };
+      let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+      const upiID = "9723880802@ybl";
+      const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${total}&cu=INR&tn=Telegram%20Order`;
+
+      const confirmation = `
+        <h5>✅ Order Placed</h5>
+        <p><strong>Name:</strong> ${name}<br/>
+        <strong>Mobile:</strong> ${mobile}<br/>
+        <strong>Address:</strong> ${address}</p>
+        <p><strong>Total Amount:</strong> ₹${total}</p>
+        <a href="${upiLink}" class="btn btn-success w-100" style="font-size:18px;">💳 Pay with UPI</a>
+        <p class="mt-3 text-muted">After payment, you can message us on Telegram for order confirmation.</p>
+      `;
+
+      document.body.innerHTML = `<div class="container mt-4">${confirmation}</div>`;
     }
   </script>
 </body>
